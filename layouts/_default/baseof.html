@@ -3,7 +3,9 @@
     {{ partial "head.html" . }}
     <body>
         {{ partial "header.html" . }}
+        <div class="main-content" style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
         {{ block "main" . }}{{ end }}
+        </div>
         {{ partial "footer.html" . }}
         {{ partial "custom_footer.html" . }}
     </body>
