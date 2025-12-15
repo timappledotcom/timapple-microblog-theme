@@ -48,12 +48,9 @@
 
   </article>
 
-  {{/* Plugin support - Reply by Email, Reply Count, etc. */}}
-  <div class="post-interactions" style="max-width: 650px; margin: 0 auto; padding: 1rem 0;">
-    {{/* Reply by Email plugin placeholder - plugin injects here */}}
-    {{ range $filename := .Site.Params.plugins_html }}
-      {{ partial $filename $ }}
-    {{ end }}
+  {{/* Reply by Email plugin */}}
+  <div class="post-interactions" style="max-width: 650px; margin: 0 auto; padding: 1rem 0; text-align: center;">
+    <p>{{ partial "reply-by-email.html" . }}</p>
   </div>
 
   {{/* Micro.blog Conversations (Comments/Replies) */}}
