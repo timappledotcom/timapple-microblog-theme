@@ -16,7 +16,18 @@
         {{/* Dynamic pages from Micro.blog settings - sorted by Weight */}}
         {{ range sort .Site.Menus.main "Weight" }}
           <li>
-            {{ $isActive := eq $.RelPermalink .URL }}
+            {{/* Check if current page matches menu URL or if we're on a category page matching this menu item */}}
+            {{ $menuURL := .URL | relLangURL }}
+            {{ $isActive := eq $.RelPermalink $menuURL }}
+            {{/* Also check if current page title matches menu name (for categories like Essays/Notes) */}}
+            {{ if not $isActive }}
+              {{ $isActive = eq $.Title .Name }}
+            {{ end }}
+            {{/* Also check if URL contains the menu name (case-insensitive match for category pages) */}}
+            {{ if not $isActive }}
+              {{ $lowerName := .Name | lower }}
+              {{ $isActive = in $.RelPermalink $lowerName }}
+            {{ end }}
             {{ if .Page.Params.redirect }}
               <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
             {{ else }}
