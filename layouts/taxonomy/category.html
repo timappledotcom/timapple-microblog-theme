@@ -2,14 +2,14 @@
 <main class="container">
 
   {{/* Page Header */}}
-  <header class="page-header">
+  <header class="page-header" style="text-align: center;">
     <h1 class="page-title">{{ .Title }}</h1>
     {{ if eq .Title "Essays" }}
-      <p class="page-description">Long-form thoughts and reflections</p>
+      <p class="page-description" style="font-style: italic; text-align: center;">Long-form thoughts and reflections</p>
     {{ else if eq .Title "Notes" }}
-      <p class="page-description">Quick observations and everyday musings</p>
+      <p class="page-description" style="font-style: italic; text-align: center;">Quick observations and everyday musings</p>
     {{ else }}
-      <p class="page-description">Posts in this category</p>
+      <p class="page-description" style="font-style: italic; text-align: center;">Posts in this category</p>
     {{ end }}
   </header>
 
