@@ -283,14 +283,23 @@ img { max-width: 100%; height: auto; border-radius: 4px; }
 .note-meta { font-family: var(--font-sans); font-size: 0.75rem; color: var(--color-ink-faded); }
 .note-meta a { color: var(--color-ink-faded); }
 .note-meta a:hover { color: var(--color-accent); }
-.article { padding: var(--spacing-xl) 0 var(--spacing-xxl); }
+.article { 
+  padding: var(--spacing-xl) 0 var(--spacing-xxl);
+  max-width: 650px;
+  margin: 0 auto;
+}
 .article-header {
   margin-bottom: var(--spacing-xl);
   text-align: center;
   padding-bottom: var(--spacing-lg);
   border-bottom: 1px solid var(--color-border);
 }
-.article-title { font-size: 2.5rem; line-height: 1.2; margin-bottom: var(--spacing-md); }
+.article-title { 
+  font-size: 2.5rem; 
+  line-height: 1.2; 
+  margin-bottom: var(--spacing-md);
+  font-weight: 700;
+}
 .article-meta {
   font-family: var(--font-sans);
   font-size: 0.85rem;
@@ -299,8 +308,54 @@ img { max-width: 100%; height: auto; border-radius: 4px; }
   letter-spacing: 0.08em;
 }
 .article-meta a { color: inherit; }
-.article-content { font-size: 1.05rem; }
+.article-content { 
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--color-ink-soft);
+}
+.article-content p {
+  margin-bottom: 1.5em;
+  text-align: justify;
+  hyphens: auto;
+}
+.article-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  color: var(--color-ink);
+}
+.article-content h3 {
+  font-size: 1.25rem;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--color-ink);
+}
 .article-content h2:first-child, .article-content h3:first-child { margin-top: 0; }
+.article-content blockquote {
+  border-left: 3px solid var(--color-accent);
+  margin: 2em 0;
+  padding: 0.5em 0 0.5em 1.5em;
+  font-style: italic;
+  color: var(--color-ink-faded);
+}
+.article-content pre {
+  background: var(--color-paper-dark);
+  padding: 1.25em;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-size: 0.9em;
+}
+.article-content code {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+  font-size: 0.9em;
+}
+.article-content img {
+  margin: 2em auto;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
 .article-content.essay > p:first-of-type::first-letter {
   font-family: var(--font-serif);
   font-size: 4rem;
@@ -402,12 +457,17 @@ img { max-width: 100%; height: auto; border-radius: 4px; }
 }
 .page-header {
   text-align: center;
-  margin-bottom: var(--spacing-xxl);
-  padding-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
   border-bottom: 2px solid var(--color-border);
 }
-.page-title { font-size: 2.5rem; margin-bottom: var(--spacing-sm); }
-.page-description { color: var(--color-ink-faded); font-style: italic; font-size: 1.125rem; }
+.page-title { font-size: 2.5rem; margin-bottom: var(--spacing-xs); }
+.page-description { 
+  color: var(--color-ink-faded); 
+  font-style: italic; 
+  font-size: 1.125rem;
+  margin: 0 auto;
+}
 @media (max-width: 768px) {
   html { font-size: 16px; }
   .site-title { font-size: 2rem; }
