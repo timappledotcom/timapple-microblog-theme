@@ -16,10 +16,11 @@
         {{/* Dynamic pages from Micro.blog settings - sorted by Weight */}}
         {{ range sort .Site.Menus.main "Weight" }}
           <li>
+            {{ $isActive := eq $.RelPermalink .URL }}
             {{ if .Page.Params.redirect }}
               <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
             {{ else }}
-              <a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+              <a href="{{ .URL | relLangURL | safeURL }}"{{ if $isActive }} class="active"{{ end }}>{{ .Name }}</a>
             {{ end }}
           </li>
         {{ end }}

@@ -1,15 +1,14 @@
 {{ define "main" }}
 <main class="container">
 
-  {{/* Page Header */}}
-  <header class="page-header" style="text-align: center;">
-    <h1 class="page-title">{{ .Title }}</h1>
+  {{/* Page Description */}}
+  <header class="page-header" style="text-align: center; margin-top: var(--spacing-lg);">
     {{ if eq .Title "Essays" }}
-      <p class="page-description" style="font-style: italic; text-align: center;">Long-form thoughts and reflections</p>
+      <p class="page-description" style="font-style: italic; text-align: center; color: var(--color-ink-light);">Long-form thoughts and reflections</p>
     {{ else if eq .Title "Notes" }}
-      <p class="page-description" style="font-style: italic; text-align: center;">Quick observations and everyday musings</p>
+      <p class="page-description" style="font-style: italic; text-align: center; color: var(--color-ink-light);">Quick observations and everyday musings</p>
     {{ else }}
-      <p class="page-description" style="font-style: italic; text-align: center;">Posts in this category</p>
+      <p class="page-description" style="font-style: italic; text-align: center; color: var(--color-ink-light);">Posts in this category</p>
     {{ end }}
   </header>
 
