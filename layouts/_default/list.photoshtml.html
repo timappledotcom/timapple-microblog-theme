@@ -7,33 +7,41 @@
     <p class="page-description">A visual journal</p>
   </header>
 
-  {{/* Photos Grid */}}
-  <section class="photos-page">
-    <div class="photos-grid">
-      {{/* First try posts with .Params.photos */}}
-      {{- $photoPosts := where .Site.Pages ".Params.photos" "!=" nil -}}
-      {{ range $photoPosts }}
-        <a href="{{ .Permalink }}" class="photo-item">
-          {{ range first 1 .Params.photos }}
-            <img src="{{ . }}" alt="" loading="lazy" />
+  {{/* Photos Grid - matches Micro.blog default structure */}}
+  <div class="photos-grid-container" style="display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: repeat(3, 1fr);">
+
+    {{/* Posts with .Params.photos (uploaded via Micro.blog's photo feature) */}}
+    {{- $list := where .Site.Pages ".Params.photos" "!=" nil -}}
+    {{ range $list }}
+      <a href="{{ .Permalink }}">
+        {{ range first 1 .Params.photos }}
+          <img src="{{ . }}" width="300" height="300" style="border-radius: 5px; max-width: 100%; height: auto; object-fit: cover;" class="photos-grid-item" loading="lazy" />
+        {{ end }}
+      </a>
+    {{ end }}
+
+    {{/* Fallback: find posts with images embedded in content */}}
+    {{ $allPosts := where .Site.RegularPages "Type" "post" }}
+    {{ range $allPosts }}
+      {{ if not .Params.photos }}
+        {{/* Look for img tags in rendered content */}}
+        {{ $images := findRE `<img[^>]+>` .Content }}
+        {{ if $images }}
+          {{ $firstImg := index $images 0 }}
+          {{ $srcMatches := findRE `src=["']([^"']+)["']` $firstImg }}
+          {{ if $srcMatches }}
+            {{ $srcAttr := index $srcMatches 0 }}
+            {{ $src := replaceRE `src=["']` "" $srcAttr }}
+            {{ $src = replaceRE `["']$` "" $src }}
+            <a href="{{ .Permalink }}">
+              <img src="{{ $src }}" width="300" height="300" style="border-radius: 5px; max-width: 100%; height: auto; object-fit: cover;" class="photos-grid-item" loading="lazy" />
+            </a>
           {{ end }}
-        </a>
-      {{ end }}
-      
-      {{/* Also find posts with images in content */}}
-      {{ $postsWithImages := where .Site.RegularPages "Type" "post" }}
-      {{ range $postsWithImages }}
-        {{ if and (not .Params.photos) (findRE `<img[^>]+src="([^"]+)"` .Content) }}
-          {{ $img := index (findRE `<img[^>]+src="([^"]+)"` .Content) 0 }}
-          {{ $src := index (findRE `src="([^"]+)"` $img) 0 }}
-          {{ $srcClean := replace (replace $src "src=\"" "") "\"" "" }}
-          <a href="{{ .Permalink }}" class="photo-item">
-            <img src="{{ $srcClean }}" alt="" loading="lazy" />
-          </a>
         {{ end }}
       {{ end }}
-    </div>
-  </section>
+    {{ end }}
+
+  </div>
 
 </main>
 {{ end }}
