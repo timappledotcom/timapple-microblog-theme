@@ -16,13 +16,15 @@
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <ul>
         <li><a href="{{ .Site.BaseURL }}" {{ if .IsHome }}class="active"{{ end }}>Home</a></li>
-        {{/* Dynamic pages from Micro.blog settings */}}
-        {{ range .Site.Menus.main }}
-          {{ if .Page.Params.redirect }}
-            <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
-          {{ else }}
-            <li><a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a></li>
-          {{ end }}
+        {{/* Dynamic pages from Micro.blog settings - sorted by Weight */}}
+        {{ range sort .Site.Menus.main "Weight" }}
+          <li>
+            {{ if .Page.Params.redirect }}
+              <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+            {{ else }}
+              <a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+            {{ end }}
+          </li>
         {{ end }}
         <li><a href="https://micro.blog/{{ .Site.Author.username }}">Follow</a></li>
       </ul>
