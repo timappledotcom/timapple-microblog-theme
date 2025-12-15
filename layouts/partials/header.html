@@ -16,18 +16,39 @@
         {{/* Dynamic pages from Micro.blog settings - sorted by Weight */}}
         {{ range sort .Site.Menus.main "Weight" }}
           <li>
-            {{/* Check if current page matches menu URL or if we're on a category page matching this menu item */}}
-            {{ $menuURL := .URL | relLangURL }}
-            {{ $isActive := eq $.RelPermalink $menuURL }}
-            {{/* Also check if current page title matches menu name (for categories like Essays/Notes) */}}
-            {{ if not $isActive }}
-              {{ $isActive = eq $.Title .Name }}
+            {{/* Multiple checks for active state */}}
+            {{ $menuURL := .URL }}
+            {{ $currentURL := $.Page.RelPermalink }}
+            {{ $isActive := false }}
+            
+            {{/* Direct URL match */}}
+            {{ if eq $currentURL $menuURL }}
+              {{ $isActive = true }}
             {{ end }}
-            {{/* Also check if URL contains the menu name (case-insensitive match for category pages) */}}
+            
+            {{/* Check if current URL starts with menu URL (for nested pages) */}}
             {{ if not $isActive }}
-              {{ $lowerName := .Name | lower }}
-              {{ $isActive = in $.RelPermalink $lowerName }}
+              {{ if and (gt (len $menuURL) 1) (hasPrefix $currentURL $menuURL) }}
+                {{ $isActive = true }}
+              {{ end }}
             {{ end }}
+            
+            {{/* Check if we're viewing this menu item's page */}}
+            {{ if not $isActive }}
+              {{ with .Page }}
+                {{ if eq $.Page .Page }}
+                  {{ $isActive = true }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+            
+            {{/* For category pages - check if page title matches menu name */}}
+            {{ if not $isActive }}
+              {{ if eq $.Page.Title .Name }}
+                {{ $isActive = true }}
+              {{ end }}
+            {{ end }}
+            
             {{ if .Page.Params.redirect }}
               <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
             {{ else }}
