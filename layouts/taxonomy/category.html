@@ -71,7 +71,7 @@
                 </time>
               </span>
               <span class="archive-title p-name">
-                <a href="{{ .Permalink }}" class="u-url">{{ if .Title }}{{ .Title }}{{ else }}{{ .Summary | truncate 60 }}{{ end }}</a>
+                <a href="{{ .Permalink }}" class="u-url">{{ if .Title }}{{ .Title }}{{ else }}{{ .Content | plainify | truncate 60 }}{{ end }}</a>
               </span>
               <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
             </li>
